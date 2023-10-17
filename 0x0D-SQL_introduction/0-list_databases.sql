@@ -1,3 +1,3 @@
--- project 0
---list databases
+-- Displays all databases
+-- Query to display databases
 SHOW DATABASES;
