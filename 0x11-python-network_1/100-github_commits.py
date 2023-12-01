@@ -1,26 +1,22 @@
 #!/usr/bin/python3
 """
-Script to list 10 most recent commits in a repository
-by a user using the GitHub API.
+Python script that shows the last 10 commits of a repository
+in GitHub
 """
-
-import requests
+from requests import get, auth
 import sys
 
+
 if __name__ == "__main__":
-    repo_name = sys.argv[1]
-    owner_name = sys.argv[2]
-
-    url = f"https://api.github.com/repos/{owner_name}/{repo_name}/commits"
-    params = {"per_page": 10}
-    response = requests.get(url, params=params)
-
-    if response.status_code == 200:
-        commits = response.json()
-        for commit in commits:
-            sha = commit["sha"]
-            author_name = commit["commit"]["author"]["name"]
-            print(f"{sha}: {author_name}")
-    else:
-        print(response.status_code)
-        
+    try:
+        repo = sys.argv[1]
+        owner = sys.argv[2]
+        url = 'https://api.github.com/repos/{}/{}/commits'.format(owner, repo)
+        r = get(url)
+        json_o = r.json()
+        for i in range(0, 10):
+            print("{}: {}".format(json_o[i].get('sha'), json_o[i].get('commit')
+                                  .get('author').get('name')))
+    except:
+        pass
+    
